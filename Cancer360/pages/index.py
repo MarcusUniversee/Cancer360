@@ -14,6 +14,7 @@ def index() -> rx.Component:
         The UI for the home page.
     """
     return rx.vstack(
+        appointment(),
         rx.text("Insert graphics here"),
         rx.link(
             rx.circle(
