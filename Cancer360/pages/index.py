@@ -2,7 +2,7 @@
 
 from Cancer360 import styles
 from Cancer360.templates import template
-
+from Cancer360.components.appointment import appointment
 import reflex as rx
 
 
@@ -13,6 +13,21 @@ def index() -> rx.Component:
     Returns:
         The UI for the home page.
     """
-    with open("README.md", encoding="utf-8") as readme:
-        content = readme.read()
-    return rx.markdown(content, component_map=styles.markdown_style)
+    return rx.vstack(
+        rx.text("Insert graphics here"),
+        rx.link(
+            rx.circle(
+                rx.text("Get Started", font_size="2em"),
+                bg="blue",
+                text_color="white",
+                padding="2em"
+            ),
+            href="/dashboard"
+        ),
+        border="none",
+        outline="none",
+        width="100%",
+        padding="1em",
+        justify_content= "center",
+        align_items= "center",
+    )
