@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from Cancer360 import styles
-from Cancer360.components.sidebar import sidebar
+from Cancer360.components.header import header
 from typing import Callable
 
 import reflex as rx
@@ -107,8 +107,9 @@ def template(
             on_load=on_load,
         )
         def templated_page():
-            return rx.hstack(
-                sidebar(),
+            return rx.vstack(
+                header(),
+                rx.spacer(),
                 rx.box(
                     rx.box(
                         page_content(),
@@ -116,8 +117,6 @@ def template(
                     ),
                     **styles.template_page_style,
                 ),
-                rx.spacer(),
-                menu_button(),
                 align_items="flex-start",
                 transition="left 0.5s, width 0.5s",
                 position="relative",
