@@ -36,9 +36,9 @@ def chatting() -> rx.Component:
                     placeholder="msg",
                     id="msg",
                 ),
-                rx.button("Submit", type_="submit"),
+                rx.button("Send", type_="submit"),
             ),
             on_submit=ChatBotState.submit_data,
         ),
-        rx.button("Refresh", on_click=ChatBotState.refresh())
+        rx.button("Refresh Conversation", on_click=ChatBotState.refresh())
     )

@@ -19,7 +19,7 @@ class ChatBotState(State):
 
     def refresh(self):
         self.prompt = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
-        self.data_formatted = ""
+        self.data_formatted = []
         self.end = False
     def submit_data(self, form_data: dict):
         data = form_data['msg']
@@ -54,7 +54,7 @@ def split_chat(data) -> list:
     s = s.replace("<s>", "").replace("</s>", "")
     index1 = s.find("<</SYS>>")
     if index1 != -1:
-        s = s[index1+12:]
+        s = s[index1+10:]
     lst1 = s.split("[INST]")
     lst2 = [str.split("[/INST]") for str in lst1]
     lst3 = []
