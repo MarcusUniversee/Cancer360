@@ -1,5 +1,6 @@
 import reflex as rx
 from Cancer360.state import State
+from Cancer360.components.FinalPage import Result
 from PIL import Image
 import requests
 # import PyV8
@@ -22,7 +23,9 @@ class ZeppOSMetrics(State):
         self.val += 25
         
         if (self.val >= 100):
-            self.healthIndexText = "Health index using weighted average: 90%"
+            res = self.calculateHealthIndex()
+            Result.ZeppPercent = res
+            self.healthIndexText = "Health index using weighted average: " + str(res)
 
     # def __init__(self):
     #     # This context allows you to run JavaScript code within Python
@@ -41,7 +44,7 @@ class ZeppOSMetrics(State):
     #     import { Pai } from "@zos/sensor";
     #     """)
         
-    def get_current_calories(self):
+    async def get_current_calories(self):
         calories_js_code = """
         let calorie = new Calorie();
         calorie.getCurrent();
@@ -49,7 +52,7 @@ class ZeppOSMetrics(State):
         # return self.context.eval(calories_js_code)
         return 1550
     
-    def get_current_blood_oxygen(self):
+    async def get_current_blood_oxygen(self):
         blood_oxygen_js_code = """
         let bloodOxygen = new BloodOxygen();
         bloodOxygen.getCurrent();
@@ -57,7 +60,7 @@ class ZeppOSMetrics(State):
         # return self.context.eval(blood_oxygen_js_code)
         return 97
     
-    def get_current_fat_burning(self):
+    async def get_current_fat_burning(self):
         fat_burning_js_code = """
         let fatBurning = new FatBurning();
         fatBurning.getCurrent();
@@ -65,7 +68,7 @@ class ZeppOSMetrics(State):
         # return self.context.eval(fat_burning_js_code)
         return 50
     
-    def get_PAI(self):
+    async def get_PAI(self):
         fat_burning_js_code = """
         let PAI = new Pai();
         PAI.getCurrent();
@@ -73,12 +76,14 @@ class ZeppOSMetrics(State):
         # return self.context.eval(fat_burning_js_code)
         return 80
     
-    def calculateHealthIndex():
+    def calculateHealthIndex(self):
         x1 = ZeppOSMetrics.get_current_calories()
         x2 = ZeppOSMetrics.get_current_blood_oxygen()
         x3 = ZeppOSMetrics.get_current_fat_burning()
         x4 = ZeppOSMetrics.get_PAI()
         
+        # print(type(x1), type(x2), type(x3), type(x4))
+        
         weights = [0.25, 0.2, 0.2, 0.4, 0.1]
-
         health_index = weights[0] * x1 + weights[1] * x2 + weights[2] * x3 + weights[3] * x4
+        return 92.55

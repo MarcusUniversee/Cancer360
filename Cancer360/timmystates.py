@@ -4,6 +4,7 @@
 import reflex as rx
 import re
 import pickle
+from Cancer360.components.FinalPage import Result
 from Cancer360.state import State
 import numpy as np
 from xgboost import XGBClassifier
@@ -108,10 +109,12 @@ def CNNPred(image_input, model):
     from random import random
     if res < 50: 
         res = 100 - res
-        res = min(95 + random() * 5, res)
+        res = round(min(95 + random() * 5, res), 2)
+        Result.ScansPercent = res
         return str((str)(res) + " % Malignant")
     else:
-        res = min(95 + random() * 5, res)
+        res = round(min(95 + random() * 5, res), 2)
+        Result.ScansPercent = res
         return str((str)(res) + " % Benign")
 
 def text_analysis(data = TimmyAppointmentFormState.form_data):
@@ -191,6 +194,7 @@ def getPred(x_inputs, path, temp):
     # if CNNState.val is not None:
     #     return CNNState.val
     # CNNState.val = temp
+    Result.QualPercent = temp
     return temp
     # xgb_pred = max(temp / 10, loaded_xgb.predict_proba([x_inputs]))
 

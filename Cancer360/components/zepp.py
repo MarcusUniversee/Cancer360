@@ -81,8 +81,8 @@ def zepp() -> rx.Component:
             value=ZeppOSMetrics.val,
         ),
         # rx.text(TimmyAppointmentFormState.results.to_string()),
-        rx.text(ZeppOSMetrics.healthIndexText),
-        
+        rx.text(ZeppOSMetrics.healthIndexText, font_weight="bold",
+                font_size="2em",),
         width="100%",
         border_bottom=styles.border,
         padding="1em",

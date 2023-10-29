@@ -3,6 +3,7 @@
 from Cancer360 import styles
 from Cancer360.timmystates import State, TimmyAppointmentFormState, CNNState, getPred, text_analysis
 from Cancer360.state import State, FormErrorState, AppointmentFormState
+from Cancer360.components.FinalPage import Result
 
 import reflex as rx
 
@@ -45,7 +46,12 @@ def cnn_detect() -> rx.Component:
         rx.foreach(
             CNNState.img, lambda img: rx.image(src=img)
         ),
-        rx.text(CNNState.prediction_string, font_weight="bold", background_image="linear-gradient(271.68deg, #EE756A 0.75%, #756AEE 88.52%)"),
+        rx.text(CNNState.prediction_string, 
+                background_image="linear-gradient(271.68deg, #4B0082 0%, #FF69B4 100%)",
+                background_clip="text",
+                font_weight="bold",
+                font_size="2em",
+            ),
         width="100%",
         padding="3em",
         border=styles.border,
