@@ -6,7 +6,7 @@ from Cancer360.state import State, FormErrorState, AppointmentFormState
 
 import reflex as rx
 
-color = "rgb(107,99,246)"
+color = "#799FC3"
 
 def cnn_detect() -> rx.Component:
     """The main view."""
@@ -16,7 +16,8 @@ def cnn_detect() -> rx.Component:
                 rx.button(
                     "Select File",
                     color=color,
-                    bg="white",
+                    bg=color,
+                    text_color="white",
                     border=f"1px solid {color}",
                 ),
                 rx.text(
@@ -24,7 +25,7 @@ def cnn_detect() -> rx.Component:
                 ),
             ),
             border=f"1px dotted {color}",
-            padding="5em",
+            padding="6em",
         ),
         rx.hstack(rx.foreach(rx.selected_files, rx.text)),
         rx.button(
@@ -32,16 +33,24 @@ def cnn_detect() -> rx.Component:
             on_click=lambda: CNNState.handle_upload(
                 rx.upload_files()
             ),
+            bg="#FF69B4",
+            text_color="white"
         ),
         rx.button(
             "Clear",
             on_click=rx.clear_selected_files,
+            bg="#FF69B4",
+            text_color="white"
         ),
         rx.foreach(
             CNNState.img, lambda img: rx.image(src=img)
         ),
         rx.text(CNNState.prediction_string),
-        padding="5em",
+        width="100%",
+        padding="3em",
+        border=styles.border,
+        border_radius="2.5rem",
+        bg="#FF69B412",
     )
 
 #AppointmentFormState.form_data.to_string()
