@@ -40,7 +40,7 @@ def cnn_detect() -> rx.Component:
         rx.foreach(
             CNNState.img, lambda img: rx.image(src=img)
         ),
-        rx.text(CNNState.prediction_accuracy),
+        rx.text(CNNState.prediction_string),
         padding="5em",
     )
 
