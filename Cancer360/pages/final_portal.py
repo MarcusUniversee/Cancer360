@@ -14,7 +14,10 @@ def final_portal() -> rx.Component:
     Returns:
         The UI for the portal page.
     """
+    
     return rx.vstack(
-        rx.text(Result.getAverage()),
-        rx.heading("Final Results")
+        rx.heading("The Final Lung Cancer Probability is " + Result.A),
+        rx.heading(Result.B),
+        padding='10em'
+        
     )
