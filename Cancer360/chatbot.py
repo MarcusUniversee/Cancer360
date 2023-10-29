@@ -15,6 +15,7 @@ system_prompt = (
 # In[ ]:
 class ChatBotState(State):
     data_formatted: list
+    data: list[tuple]
     prompt: str = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
     end: bool = False
     loading: bool = False
@@ -49,11 +50,21 @@ class ChatBotState(State):
         model_reply = output['output']['choices'][0]['text']
         self.prompt += model_reply + "</s><s>[INST]"
         self.data_formatted = split_chat(self.prompt)
+        self.data = split_chat_two(self.prompt)
         second_occurrence = self.prompt.find(string, first_occurrence + 1)
         self.loading = False
         if second_occurrence != -1:
             self.end = True
             return
+
+def split_chat_two(data) -> list:
+    s = data
+    s = s.replace("<s>", "").replace("</s>", "")
+    index1 = s.find("<</SYS>>")
+    if index1 != -1:
+        s = s[index1+10:]
+    lst1 = s.split("[INST]")
+    return [tuple(str.split("[/INST]")) for str in lst1]
 
 def split_chat(data) -> list:
     s = data
