@@ -3,64 +3,71 @@
 
 # In[ ]:
 
-
+import reflex as rx
+from Cancer360.state import State
 import together
 together.api_key = "eba8b7224a7ca9d941a365ef2eb5fc207b923f11fbecf408acb3d09b02a8be40"
-
-
-# In[ ]:
-
-
-system_prompt = (
-    "You will act as a cancer specialist nurse named Ameya for a human patient. You will ask patients a series of questions but ask one question at a time. Using the patient's response from each question, you aim to get a better understanding of if the patient has cancer and tailor your future questions in response. For example, you could start by asking if the patient has been feeling sick recently, and if they say they have, ask questions to see if these symptoms might be reflective of cancer (e.g., does this patient have a history of cancer?) Use a respectful and professional tone throughout. Keep questions concise. Once you've determined the possibility of cancer, wrap up the conversation with short suggestions on what to do next. Don't respond with more than 2 paragraphs of text. Please diagnose the patient at the end with what their chances of having lung cancer is on a scale of 0-100. Then, end the conversation with \"Have a great day!\" if the user doesn't have any questions." 
-)
-
-
-prompt = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
-
 print("Hi, My name is Ameya and I am going to be your nurse today. Can you describe some of the symptoms you're experiencing?")
+system_prompt = (
+    "You will act as a cancer specialist nurse named Ameya for a human patient. You will ask patients a series of questions but ask one question at a time. Using the patient's response from each question, you aim to get a better understanding of if the patient has lung cancer and tailor your future questions in response. For example, you could start by asking if the patient has been feeling sick recently, and if they say they have, ask questions to see if these symptoms might be reflective of cancer (e.g., does this patient have a history of cancer?) Use a respectful and professional tone throughout. Keep questions concise. Once you've determined the possibility of lung cancer, wrap up the conversation with short suggestions on what to do next. Don't respond with more than 1 paragraph of text. Please diagnose the patient at the end with what their chances of having lung cancer is on a scale of 0-100. Then, end the conversation with \"Have a great day!\" if the user doesn't have any questions." 
+)
+# In[ ]:
+class ChatBotState(State):
+    data_formatted: list
+    prompt: str = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
+    end: bool = False
 
-all_patient_responses = ""
+    def refresh(self):
+        self.prompt = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
+        self.data_formatted = ""
+        self.end = False
+    def submit_data(self, form_data: dict):
+        data = form_data['msg']
+        self.prompt += data + "[/INST]"
+        string = "Have a great day!"
+        first_occurrence = self.prompt.find(string)
+        second_occurrence = self.prompt.find(string, first_occurrence + 1)
+        if second_occurrence != -1:
+            self.end = True
+            return
+        output = together.Complete.create(
+            self.prompt, 
+            model = "togethercomputer/llama-2-70b-chat", 
+            max_tokens = 500,
+            temperature = 0.6,
+            top_k = 90,
+            top_p = 0.8,
+            repetition_penalty = 1.1,
+            stop = ['</s>']
+        )
+        model_reply = output['output']['choices'][0]['text']
+        self.prompt += model_reply + "</s><s>[INST]"
+        self.data = self.prompt
+        self.data_formatted = split_chat(self.prompt)
+        second_occurrence = self.prompt.find(string, first_occurrence + 1)
+        if second_occurrence != -1:
+            self.end = True
+            return
 
-while True:
-
-    user_input = input("Input: ")
-
-    prompt += user_input + "[/INST]"
-
-    #string = ["Have a great day!", "Have a good day!"]
-    string = "Have a great day!"
-    #first_occurrence = prompt.find(string[0])
-    first_occurrence = prompt.find(string)
-    #second_occurrence = [prompt.find(string[i], first_occurrence + 1) for i in range(2)]
-    #for val in second_occurrence:
-        #if val != -1 :
-            #break
-    second_occurrence = prompt.find(string, first_occurrence + 1)
-    if second_occurrence != -1:
-        break
-
-    output = together.Complete.create(
-      prompt, 
-      model = "togethercomputer/llama-2-70b-chat", 
-      max_tokens = 500,
-      temperature = 0.6,
-      top_k = 90,
-      top_p = 0.8,
-      repetition_penalty = 1.1,
-      stop = ['</s>']
-    )
-
-    model_reply = output['output']['choices'][0]['text']
-    
-    prompt += model_reply + "</s><s>[INST]"
-    
-    print("Output: " + output['output']['choices'][0]['text'])
-
-    #second_occurrence = [prompt.find(string[i], first_occurrence + 1) for i in range(2)]
-    #for val in second_occurrence:
-        #if val != -1 :
-            #break
-    second_occurrence = prompt.find(string, first_occurrence + 1)
-    if second_occurrence != -1:
-        break
+def split_chat(data) -> list:
+    s = data
+    s = s.replace("<s>", "").replace("</s>", "")
+    index1 = s.find("<</SYS>>")
+    if index1 != -1:
+        s = s[index1+12:]
+    lst1 = s.split("[INST]")
+    lst2 = [str.split("[/INST]") for str in lst1]
+    lst3 = []
+    for lst in lst2:
+        lst3.append("Me:\\n" + lst[0])
+        if len(lst) > 1:
+            lst3.append("Ameya:\\n" + lst[1])
+        else:
+            lst3.append("")
+    lst4 = []
+    for lst in lst3:
+        splitlst = lst.split("\\n")
+        for s in splitlst:
+            s = s.replace("\\", "")
+            lst4.append(s)
+    return lst4

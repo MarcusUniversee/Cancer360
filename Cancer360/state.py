@@ -13,7 +13,7 @@ class State(rx.State):
     pass
 
 
-class ChatBotState(State):
+"""class ChatBotState(State):
     data: str
     data_formatted: list
     def submit_data(self, form_data: dict):
@@ -44,6 +44,7 @@ def split_chat(data) -> list:
             s = s.replace("\\", "")
             lst4.append(s)
     return lst4
+"""
 
 class AppointmentFormState(State):
     form_data: dict = {}

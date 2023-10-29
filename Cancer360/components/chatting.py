@@ -1,7 +1,8 @@
 """Sidebar component for the app."""
 
 from Cancer360 import styles
-from Cancer360.state import State, ChatBotState
+from Cancer360.state import State
+from Cancer360.chatbot import ChatBotState
 
 import reflex as rx
 
@@ -23,6 +24,8 @@ def chatting() -> rx.Component:
         The header component.
     """
     return rx.vstack(
+        chat_bubble("Ameya:"),
+        chat_bubble("Hi, My name is Ameya and I am going to be your nurse today. Can you describe some of the symptoms you're experiencing?"),
         rx.foreach(
             ChatBotState.data_formatted,
             chat_bubble,
@@ -37,4 +40,5 @@ def chatting() -> rx.Component:
             ),
             on_submit=ChatBotState.submit_data,
         ),
+        rx.button("Refresh", on_click=ChatBotState.refresh())
     )
