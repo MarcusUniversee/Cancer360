@@ -14,8 +14,8 @@ def zepp_portal() -> rx.Component:
         The UI for the portal page.
     """
     
-    return rx.vstack(
+    return rx.hstack(
         sidebar("#FF69B470", "#FF69B470", "#FF69B4", "#FFFFFF", 65),
         rx.spacer(),
-        zepp(),
+        zepp()
     )

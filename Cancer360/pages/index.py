@@ -18,7 +18,7 @@ def index() -> rx.Component:
     """
     return rx.vstack(
         # appointment(),
-        zepp(),
+        # zepp(),
         # timmy_component(),
         #cnn_detect(),
         #rx.text("Insert graphics here"),
