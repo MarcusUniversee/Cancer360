@@ -16,6 +16,7 @@ class ZeppOSMetrics:
         import { log as Logger, px } from "@zos/utils";
         import { BloodOxygen } from "@zos/sensor";
         import { FatBurning } from "@zos/sensor";
+        import { Pai } from "@zos/sensor";
         """)
         
     def get_current_calories(self):
@@ -38,3 +39,20 @@ class ZeppOSMetrics:
         fatBurning.getCurrent();
         """
         return self.context.eval(fat_burning_js_code)
+    
+    def get_PAI(self):
+        fat_burning_js_code = """
+        let PAI = new Pai();
+        PAI.getCurrent();
+        """
+        return self.context.eval(fat_burning_js_code)
+    
+    def calculateHealthIndex():
+        x1 = self.get_current_calories()
+        x2 = self.get_current_blood_oxygen()
+        x3 = self.get_current_fat_burning()
+        x4 = self.get_PAI()
+        
+        weights = [0.25, 0.2, 0.2, 0.4, 0.1]
+
+        health_index = weights[0] * x1 + weights[1] * x2 + weights[2] * x3 + weights[3] * x4

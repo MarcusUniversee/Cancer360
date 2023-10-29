@@ -4,6 +4,7 @@ from Cancer360 import styles
 from Cancer360.state import State
 
 import reflex as rx
+color1 = "#FF69B4"
 
 def header_item(text: str, url: str) -> rx.Component:
     """Sidebar item.
@@ -21,11 +22,11 @@ def header_item(text: str, url: str) -> rx.Component:
         rx.hstack(
             rx.text(
                 text,
-                font_size="2em",
+                font_size="1.5em",
                 text_color = 'black'
             ),
             width="100%",
-            padding_x="3.5em",
+            padding_x="1em",
         ),
         href=url,
         width="100%",
@@ -55,9 +56,10 @@ def header() -> rx.Component:
             ),
             #bg="blue",
             bg = "white",
-            width="30%",
+            width="20%",
             height="100%",
         ),
+        rx.spacer(),
         rx.hstack(
             *[
                 header_item(
@@ -66,7 +68,9 @@ def header() -> rx.Component:
                     )
                     for page in get_decorated_pages()
             ],
-            width="70%",
+            #rx.button('Start', bg=color1, color = "white", padding="1em", border_radius="8px", on_click=rx.redirect(
+            #"/portal")),
+            width="35%",
             overflow_y="auto",
             border="none",
             outline="none",
@@ -74,12 +78,16 @@ def header() -> rx.Component:
             height="100%",
             bg="white",
         ),
+        rx.spacer(),
+        rx.button('Get Started', bg=color1, color = "white", padding="1em", border_radius="8px", on_click=rx.redirect(
+            "/portal")),
         width="100%",
         border_bottom=styles.border,
         padding="0em",
         margin="0em",
-        height="8em",
+        height="6em",
         bg="white", #black line separating the stacks
+        padding_x="2em",
         
         
     )

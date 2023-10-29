@@ -18,21 +18,27 @@ def index() -> rx.Component:
     return rx.vstack(
         # appointment(),
         # timmy_component(),
-        # cnn_detect(),
-        rx.text("Insert graphics here"),
+        #cnn_detect(),
+        #rx.text("Insert graphics here"),
         rx.link(
             rx.circle(
-                rx.text("Get Started", font_size="2em"),
-                bg="blue",
+                rx.text("Get Started", font_size="2em", as_="b"),
+                bg="#606060",
                 text_color="white",
-                padding="2em"
+                padding="2em",
+                box_shadow="rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;",
+                _hover={"box_shadow" : 'None'}
             ),
-            href="/dashboard"
+            href="/portal", 
+            text_decoration = "none",
+            _hover={}
         ),
+        background_image = "/background-graphic.png",
         border="none",
         outline="none",
         width="100%",
-        padding="1em",
+        height="100%",
+        padding="0em",
         justify_content= "center",
         align_items= "center",
     )
