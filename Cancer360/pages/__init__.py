@@ -1,3 +1,3 @@
 from .portal import portal
 from .index import index
-#from .settings import settings
+from .scans_portal import scans_portal

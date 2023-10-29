@@ -30,21 +30,34 @@ def chatting() -> rx.Component:
             ChatBotState.data_formatted,
             chat_bubble,
         ),
-        rx.form(
-            rx.hstack(
-                rx.input(
-                    placeholder="msg",
-                    id="msg",
+        rx.cond(
+            ChatBotState.end,
+            rx.link(
+                rx.circle(
+                    rx.text("Next", font_size="2em"),
+                    bg="blue",
+                    text_color="white",
+                    padding="2em"
                 ),
-                rx.button(
-                    "Send",
-                    type_="submit",
-                    on_click=ChatBotState.start_loading(),
-                    is_loading=ChatBotState.loading,
-                    loading_text="Sending.."
-                ),
+                href="/scans_portal"
             ),
-            on_submit=ChatBotState.submit_data,
+            rx.form(
+                rx.hstack(
+                    rx.input(
+                        placeholder="msg",
+                        id="msg",
+                    ),
+                    rx.button(
+                        "Send",
+                        type_="submit",
+                        on_click=ChatBotState.start_loading(),
+                        is_loading=ChatBotState.loading,
+                        loading_text="Sending.."
+                    ),
+                ),
+                on_submit=ChatBotState.submit_data,
+            ),
         ),
+        
         rx.button("Refresh Conversation", on_click=ChatBotState.refresh())
     )
