@@ -20,7 +20,8 @@ def cnn_detect() -> rx.Component:
                         rx.text("Next", font_size="2em"),
                         bg="#FF69B4",
                         text_color="white",
-                        padding="2em"
+                        padding="2em",
+                        on_click=Result.getAverage()
                     ),
                     href="/final_portal"
                 ),
