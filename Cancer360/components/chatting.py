@@ -45,8 +45,8 @@ def chat_bubble_left(text: str) -> rx.Component:
     return rx.box(
         rx.box(
             rx.text(text, text_align="left"),
-            bg="#FF69B4",
-            text_color="white",
+            text_color="black",
+            bg="white",
             padding="0.5em",
             overflow_wrap= "break-word",
             width="fit-content",
