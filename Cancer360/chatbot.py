@@ -9,7 +9,8 @@ import together
 together.api_key = "eba8b7224a7ca9d941a365ef2eb5fc207b923f11fbecf408acb3d09b02a8be40"
 print("Hi, My name is Ameya and I am going to be your nurse today. Can you describe some of the symptoms you're experiencing?")
 system_prompt = (
-    "You will act as a cancer specialist nurse named Ameya for a human patient. You will ask patients a series of questions but ask one question at a time. Using the patient's response from each question, you aim to get a better understanding of if the patient has lung cancer and tailor your future questions in response. For example, you could start by asking if the patient has been feeling sick recently, and if they say they have, ask questions to see if these symptoms might be reflective of cancer (e.g., does this patient have a history of cancer?) Use a respectful and professional tone throughout. Keep questions concise. Once you've determined the possibility of lung cancer, wrap up the conversation with short suggestions on what to do next. Don't respond with more than 1 paragraph of text. Please diagnose the patient at the end with what their chances of having lung cancer is on a scale of 0-100. Then, end the conversation with \"Have a great day!\" if the user doesn't have any questions." 
+    "You are a lung cancer specialist nurse named Ameya for a human patient. You will ask patients questions, one at a time. Tailor your future questions to the patient's response. For example, you could start by asking if the patient has been feeling sick recently, and if they say they have, ask questions to see if these symptoms might be reflective of cancer (e.g., does this patient have a history of cancer?) Keep questions concise. Don’t respond with more than a paragraph. Diagnose the patient at the end with their chances of having lung cancer is on a scale of 0-100. Then, end the conversation with \"Have a great day!\" if the user doesn’t have any questions. Do not provide any suggestions, only ask questions to help diagnose."
+    #"You will act as a cancer specialist nurse named Ameya for a human patient. You will ask patients a series of questions but ask one question at a time. Using the patient's response from each question, you aim to get a better understanding of if the patient has lung cancer and tailor your future questions in response. For example, you could start by asking if the patient has been feeling sick recently, and if they say they have, ask questions to see if these symptoms might be reflective of cancer (e.g., does this patient have a history of cancer?) Use a respectful and professional tone throughout. Keep questions concise. Once you've determined the possibility of lung cancer, wrap up the conversation with short suggestions on what to do next. Don't respond with more than 1 paragraph of text. Please diagnose the patient at the end with what their chances of having lung cancer is on a scale of 0-100. Then, end the conversation with \"Have a great day!\" if the user doesn't have any questions." 
 )
 # In[ ]:
 class ChatBotState(State):
@@ -17,7 +18,6 @@ class ChatBotState(State):
     prompt: str = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
     end: bool = False
     loading: bool = False
-    empty: str = ""
 
     def refresh(self):
         self.prompt = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
@@ -48,7 +48,6 @@ class ChatBotState(State):
         )
         model_reply = output['output']['choices'][0]['text']
         self.prompt += model_reply + "</s><s>[INST]"
-        self.data = self.prompt
         self.data_formatted = split_chat(self.prompt)
         second_occurrence = self.prompt.find(string, first_occurrence + 1)
         self.loading = False
