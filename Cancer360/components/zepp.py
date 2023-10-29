@@ -71,8 +71,7 @@ def zepp() -> rx.Component:
                 
                 rx.text("Personal Activity Index"),
                 rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked,submit="submit")
-            ),
-            on_submit=ZeppOSMetrics.handle_submit_data
+            )
         ),
         
         rx.divider(),

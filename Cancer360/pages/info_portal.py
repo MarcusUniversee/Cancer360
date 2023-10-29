@@ -16,5 +16,5 @@ def info_portal() -> rx.Component:
     return rx.hstack(
         sidebar("#FF69B470", "#FF69B4", "#FFFFFF", "#FFFFFF", 35),
         rx.spacer(),
-        timmy_component()
+        timmy_component(),
     )

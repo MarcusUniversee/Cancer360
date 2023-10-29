@@ -4,6 +4,7 @@ from Cancer360.templates import template
 import reflex as rx
 from Cancer360.components.cnn_detect import cnn_detect
 from Cancer360.components.steps_sidebar import sidebar
+from Cancer360.components.zepp import zepp
 
 @template(route="/final_portal", title="Final Portal")
 def final_portal() -> rx.Component:
