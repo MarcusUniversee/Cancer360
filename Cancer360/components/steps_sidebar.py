@@ -31,7 +31,7 @@ def sidebar(color1, color2, color3, color4, prog) -> rx.Component:
     return rx.box(
         rx.vstack(
             rx.text("Steps", font_size="2em", padding="0.2em"),
-            rx.progress(value=prog, width="100%", padding="0.2em", color_scheme="pink"),
+            rx.progress(value=prog, width="80%", padding="0.4em", color_scheme="pink"),
             rx.vstack(
                 sidebar_item("Chatbot", "/portal", color1),
                 sidebar_item("General Information", "/info_portal", color2),
@@ -40,8 +40,9 @@ def sidebar(color1, color2, color3, color4, prog) -> rx.Component:
                 width="100%"
             ),
             rx.spacer(),
-            height="100dvh",
-            width="100%"
+            height="100vh",
+            width="100%",
+            position="sticky",
         ),
         display=["none", "none", "block"],
         min_width="15em",

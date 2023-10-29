@@ -22,27 +22,28 @@ def index() -> rx.Component:
         # timmy_component(),
         # cnn_detect(),
         #rx.text("Insert graphics here"),
-        rx.square(
-            rx.vstack(
-                rx.text(
-                    "CANCER360°", font_size="4em"
-                        ),
-                rx.text(
-                    "An all-encompassing healthcare solution that harnesses the power of AI and innovative technology to revolutionize cancer patient care, ensuring a seamless journey from diagnosis to treatment while promoting effective communication and holistic support for patients and their families.", font_size="1.5em", align_items= "center"
-                )
-            ),
-            text_align='center',
-            text_color="black",
-            text_decoration= "none",
-            bg='white',
-            padding="3em",
-
+        rx.vstack(
+            rx.square(
+                rx.vstack(
+                    rx.text(
+                        "CANCER360°", font_size="4em"
+                            ),
+                    rx.text(
+                        "An all-encompassing healthcare solution that harnesses the power of AI and innovative technology to revolutionize cancer patient care, ensuring a seamless journey from diagnosis to treatment while promoting effective communication and holistic support for patients and their families.", font_size="1.5em", align_items= "center"
+                    )
+                ),
+                text_align='center',
+                text_color="black",
+                text_decoration= "none",
+                bg='white',
+                padding="3em",
+            )
         ),
         background_image = "/background-graphic.png",
         border="none",
         outline="none",
         width="100%",
-        height="110%",
+        height="100%",
         padding="7em",
         justify_content= "center",
         align_items= "center",

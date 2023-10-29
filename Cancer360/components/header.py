@@ -82,7 +82,7 @@ def header() -> rx.Component:
         rx.button('Get Started', bg=color1, color = "white", padding="1em", border_radius="8px", on_click=rx.redirect(
             "/portal")),
         width="100%",
-        border_bottom=styles.border,
+        #border_bottom=styles.border,
         padding="0em",
         margin="0em",
         height="6em",
