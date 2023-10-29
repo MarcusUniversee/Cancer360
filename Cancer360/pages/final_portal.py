@@ -5,6 +5,7 @@ import reflex as rx
 from Cancer360.components.cnn_detect import cnn_detect
 from Cancer360.components.steps_sidebar import sidebar
 from Cancer360.components.zepp import zepp
+from Cancer360.components.FinalPage import Result
 
 @template(route="/final_portal", title="Final Portal")
 def final_portal() -> rx.Component:
@@ -14,5 +15,6 @@ def final_portal() -> rx.Component:
         The UI for the portal page.
     """
     return rx.vstack(
+        rx.text(Result.getAverage()),
         rx.heading("Final Results")
     )

@@ -96,8 +96,8 @@ def zepp() -> rx.Component:
             track_color="white"
         ),
         # rx.text(TimmyAppointmentFormState.results.to_string()),
-        rx.text(ZeppOSMetrics.healthIndexText),
-        
+        rx.text(ZeppOSMetrics.healthIndexText, font_weight="bold",
+                font_size="2em",),
         width="100%",
         padding="3em",
         border=styles.border,
