@@ -116,11 +116,11 @@ def CNNPred(image_input, model):
     if res < 50: 
         res = 100 - res
         res = round(min(95 + random() * 5, res), 2)
-        Result.ScansPercent = res
+        Result.ScansPercent = res / 100
         return str((str)(res) + " % Malignant")
     else:
         res = round(min(95 + random() * 5, res), 2)
-        Result.ScansPercent = res
+        Result.ScansPercent = res / 100
         return str((str)(res) + " % Benign")
 
 def text_analysis(data = TimmyAppointmentFormState.form_data):
