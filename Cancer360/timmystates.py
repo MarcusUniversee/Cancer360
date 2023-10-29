@@ -75,6 +75,7 @@ class CNNState(State):
     img: list[str]
     prediction_string: str
     val: float
+    has_img: bool
 
     async def handle_upload(
         self, files: list[rx.UploadFile]
@@ -91,11 +92,16 @@ class CNNState(State):
             with open(outfile, "wb") as file_object:
                 file_object.write(upload_data)
 
-            self.img.append(file.filename)
+            self.img.append("../" + file.filename)
         
         model = load_model('my_model.h5')
         self.prediction_string = CNNPred(plt.imread(outfile), model)
+        self.has_img = True
         # print(self.prediction_string)
+    def handle_clear(self):
+        self.has_img = False
+        self.prediction_string = ""
+        self.img = []
            
             
 def CNNPred(image_input, model):

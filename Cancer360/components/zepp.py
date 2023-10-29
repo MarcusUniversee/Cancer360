@@ -48,29 +48,42 @@ def get_PAI(self):
 def zepp() -> rx.Component:
     # Input + Check + drop down
     return rx.vstack(
-        rx.box(
-            rx.image (
-                src="/Zeppos.png", object_fit="contain"
+        rx.cond(
+            ZeppOSMetrics.val >= 100,
+            rx.link(
+                rx.circle(
+                    rx.text("Next", font_size="2em"),
+                    bg="#FF69B4",
+                    text_color="white",
+                    padding="2em"
+                ),
+                href="/scans_portal"
             ),
-            width="25em",
-            height="25em",
-            padding="5em"
+                rx.box(
+                rx.image (
+                    src="/Zeppos.png", object_fit="contain"
+                ),
+                width="25em",
+                height="25em",
+                padding="5em"
+            ),
         ),
+        
         rx.vstack(
             rx.hstack(     
                 rx.text("Blood Oxygen"),
-                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked, submit="submit"),
+                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked, submit="submit", bg="#FF69B4", text_color="white"),
                 
                 
                 rx.text("Calorie Burned"),
-                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked,submit="submit"),
+                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked,submit="submit", bg="#FF69B4", text_color="white"),
             ),
             rx.hstack(
                 rx.text("Fat Burned"),
-                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked,submit="submit"),
+                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked,submit="submit", bg="#FF69B4", text_color="white"),
                 
                 rx.text("Personal Activity Index"),
-                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked,submit="submit")
+                rx.button("Fetch", padding="0.25pm", on_click=ZeppOSMetrics.clicked,submit="submit", bg="#FF69B4", text_color="white")
             )
         ),
         
@@ -79,13 +92,17 @@ def zepp() -> rx.Component:
         rx.circular_progress(
             rx.circular_progress_label("", color="pink"),
             value=ZeppOSMetrics.val,
+            color="pink",
+            track_color="white"
         ),
         # rx.text(TimmyAppointmentFormState.results.to_string()),
         rx.text(ZeppOSMetrics.healthIndexText),
         
         width="100%",
-        border_bottom=styles.border,
-        padding="1em",
+        padding="3em",
+        border=styles.border,
+        border_radius="2.5rem",
+        bg="#FF69B412",
     )
 
 #AppointmentFormState.form_data.to_string() 

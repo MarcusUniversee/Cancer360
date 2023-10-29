@@ -11,37 +11,55 @@ color = "#799FC3"
 def cnn_detect() -> rx.Component:
     """The main view."""
     return rx.vstack(
-        rx.upload(
+        rx.cond(
+            CNNState.has_img,
             rx.vstack(
+                rx.link(
+                    rx.circle(
+                        rx.text("Next", font_size="2em"),
+                        bg="#FF69B4",
+                        text_color="white",
+                        padding="2em"
+                    ),
+                    href="/final_portal"
+                ),
+                rx.button("Reload", on_click=CNNState.handle_clear(), bg="#FF69B4", text_color="white")
+            ),
+            rx.vstack(
+                rx.upload(
+                    rx.vstack(
+                        rx.button(
+                            "Select File",
+                            color=color,
+                            bg=color,
+                            text_color="white",
+                            border=f"1px solid {color}",
+                        ),
+                        rx.text(
+                            "Drag and drop files here or click to select files"
+                        ),
+                    ),
+                    border=f"1px dotted {color}",
+                    padding="6em",
+                ),
+                rx.hstack(rx.foreach(rx.selected_files, rx.text)),
                 rx.button(
-                    "Select File",
-                    color=color,
-                    bg=color,
-                    text_color="white",
-                    border=f"1px solid {color}",
+                    "Upload",
+                    on_click=lambda: CNNState.handle_upload(
+                        rx.upload_files()
+                    ),
+                    bg="#FF69B4",
+                    text_color="white"
                 ),
-                rx.text(
-                    "Drag and drop files here or click to select files"
+                rx.button(
+                    "Clear",
+                    on_click=rx.clear_selected_files,
+                    bg="#FF69B4",
+                    text_color="white"
                 ),
             ),
-            border=f"1px dotted {color}",
-            padding="6em",
         ),
-        rx.hstack(rx.foreach(rx.selected_files, rx.text)),
-        rx.button(
-            "Upload",
-            on_click=lambda: CNNState.handle_upload(
-                rx.upload_files()
-            ),
-            bg="#FF69B4",
-            text_color="white"
-        ),
-        rx.button(
-            "Clear",
-            on_click=rx.clear_selected_files,
-            bg="#FF69B4",
-            text_color="white"
-        ),
+        
         rx.foreach(
             CNNState.img, lambda img: rx.image(src=img)
         ),
