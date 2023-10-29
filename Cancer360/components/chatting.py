@@ -44,7 +44,7 @@ def chatting() -> rx.Component:
             rx.form(
                 rx.hstack(
                     rx.input(
-                        placeholder="msg",
+                        placeholder="",
                         id="msg",
                     ),
                     rx.button(
