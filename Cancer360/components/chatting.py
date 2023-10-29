@@ -6,15 +6,55 @@ from Cancer360.chatbot import ChatBotState
 
 import reflex as rx
 
-
-def chat_bubble(text: str) -> rx.Component:
+def qa(question: str, answer: str) -> rx.Component:
     return rx.box(
-        text,
-        text_color="black",
-        bg="white",
-        padding="0.5em",
-        overflow_wrap= "break-word",
-        width="100%"
+        rx.box(
+            rx.text(question, text_align="left"),
+            bg="#FF69B4",
+            text_color="white",
+            padding="0.5em",
+            overflow_wrap= "break-word",
+            width="fit-content",
+            border_radius="1rem",
+            max_width="35em",
+            margin_y="1em",
+        ),
+        rx.box(
+            rx.text(answer, text_align="left"),
+            text_color="black",
+            bg="white",
+            padding="0.5em",
+            overflow_wrap= "break-word",
+            width="fit-content",
+            border_radius="1rem",
+            max_width="35em",
+            margin_y="1em",
+        ),
+        min_width="40em",
+    )
+
+def chat() -> rx.Component:
+    return rx.box(
+        rx.foreach(
+            ChatBotState.data,
+            lambda messages: qa(messages[0], messages[1]),
+        )
+    )
+
+def chat_bubble_left(text: str) -> rx.Component:
+    return rx.box(
+        rx.box(
+            rx.text(text, text_align="left"),
+            bg="#FF69B4",
+            text_color="white",
+            padding="0.5em",
+            overflow_wrap= "break-word",
+            width="fit-content",
+            border_radius="1rem",
+            max_width="35em",
+            margin_y="1em",
+        ),
+        min_width="40em",
     )
 
 def chatting() -> rx.Component:
@@ -24,12 +64,12 @@ def chatting() -> rx.Component:
         The header component.
     """
     return rx.vstack(
-        chat_bubble("Ameya:"),
-        chat_bubble("Hi, My name is Ameya and I am going to be your nurse today. Can you describe some of the symptoms you're experiencing?"),
-        rx.foreach(
-            ChatBotState.data_formatted,
-            chat_bubble,
-        ),
+        chat_bubble_left("Hi, My name is Ameya and I am going to be your nurse today. Can you describe some of the symptoms you're experiencing?"),
+        #rx.foreach(
+            #ChatBotState.data_formatted,
+            #chat_bubble,
+        #),
+        chat(),
         rx.cond(
             ChatBotState.end,
             rx.link(
@@ -61,7 +101,7 @@ def chatting() -> rx.Component:
             ),
         ),
         rx.button("Refresh Conversation", on_click=ChatBotState.refresh(), bg="#FF69B4", text_color="white"),
-        width="100%",
+        min_width="40em",
         padding="2em",
         border=styles.border,
         border_radius="2.5rem",
