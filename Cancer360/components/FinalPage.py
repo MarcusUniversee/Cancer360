@@ -13,15 +13,15 @@ class Result(State):
     B : str
     
     def getAverage(self):
-        print("SDLFJSDFKLJSDFL:KD")
         self.ChatPercent = 0.8
-        temp = (self.ChatPercent + self.ScansPercent + self.ZeppPercent + self.QualPercent) / 4
+        temp = (self.ChatPercent + self.ScansPercent + self.ZeppPercent + self.QualPercent) / 4 * 100
+        print(self.ChatPercent, self.ScansPercent, self.ZeppPercent, self.QualPercent)
         temp = round(temp, 2)
         self.A = str(temp)
         asdf = ""
-        if temp > 0.7:
+        if temp > 70:
             asdf = "We highly recommend you visit a licensed medical professional. Hold on while we connect you with a hospital near you."
-        elif temp > 0.5:
+        elif temp > 50:
             asdf = "We recommend that you still visit a licensed medical professional. Hold on while we connect you with a hospital near you."
         else:
             asdf = "You are probably safe, but we still recommend that you visit a licensed medical professional."

@@ -18,4 +18,6 @@ def final_portal() -> rx.Component:
     return rx.vstack(
         rx.heading("The Final Lung Cancer Probability is " + Result.A),
         rx.heading(Result.B),
+        padding='10em'
+        
     )
