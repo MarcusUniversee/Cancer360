@@ -85,5 +85,5 @@ class ZeppOSMetrics(State):
         # print(type(x1), type(x2), type(x3), type(x4))
         
         weights = [0.25, 0.2, 0.2, 0.4, 0.1]
-        health_index = weights[0] * x1 + weights[1] * x2 + weights[2] * x3 + weights[3] * x4
+        #health_index = weights[0] * x1 + weights[1] * x2 + weights[2] * x3 + weights[3] * x4
         return 92.55
