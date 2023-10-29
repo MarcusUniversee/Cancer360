@@ -16,27 +16,31 @@ def sidebar(color1, color2, color3, color4) -> rx.Component:
 
     return rx.box(
         rx.vstack(
-            rx.text("Steps", font_size="3em"),
+            rx.text("Steps", font_size="2.5em", padding="1em"),
             rx.vstack(
                 rx.box(
                     rx.text("Chatbot"),
                     padding="2em",
-                    bg = color1
+                    bg = color1,
+                    width="100%"
                 ),
                 rx.box(
                     rx.text("General information"),
                     padding="2em",
-                    bg=color2
+                    bg=color2,
+                    width="100%"
                 ),
                 rx.box(
                     rx.text("Zepp watch"),
                     padding="2em",
-                    bg=color3
+                    bg=color3,
+                    width="100%"
                 ),
                 rx.box(
                     rx.text("Xray Scan"),
                     padding="2em",
-                    bg=color4
+                    bg=color4,
+                    width="100%"
                 ),
                 width="100%"
             ),
@@ -45,7 +49,7 @@ def sidebar(color1, color2, color3, color4) -> rx.Component:
             width="100%"
         ),
         display=["none", "none", "block"],
-        min_width=styles.sidebar_width,
+        width="15em",
         height="100%",
         position="sticky",
         top="0px",

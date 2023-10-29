@@ -66,7 +66,7 @@ def header() -> rx.Component:
                         text=page.get("title", page["route"].strip("/").capitalize()),
                         url=page["route"],
                     )
-                    for page in get_decorated_pages()
+                    for page in get_decorated_pages() if "_portal" not in page["route"]
             ],
             #rx.button('Start', bg=color1, color = "white", padding="1em", border_radius="8px", on_click=rx.redirect(
             #"/portal")),
