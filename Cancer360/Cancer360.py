@@ -8,5 +8,5 @@ from Cancer360.pages import *
 import reflex as rx
 
 # Create the app and compile it.
-app = rx.App(style=styles.base_style)
+app = rx.App(style=styles.base_style, stylesheet=styles.STYLESHEET)
 app.compile()

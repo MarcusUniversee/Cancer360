@@ -79,5 +79,7 @@ def header() -> rx.Component:
         padding="0em",
         margin="0em",
         height="8em",
-        bg="white"
+        bg="white", #black line separating the stacks
+        
+        
     )
