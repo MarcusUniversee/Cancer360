@@ -35,11 +35,11 @@ def chatting() -> rx.Component:
             rx.link(
                 rx.circle(
                     rx.text("Next", font_size="2em"),
-                    bg="blue",
+                    bg="#FF69B4",
                     text_color="white",
                     padding="2em"
                 ),
-                href="/scans_portal"
+                href="/info_portal"
             ),
             rx.form(
                 rx.hstack(
@@ -52,13 +52,18 @@ def chatting() -> rx.Component:
                         type_="submit",
                         on_click=ChatBotState.start_loading(),
                         is_loading=ChatBotState.loading,
-                        loading_text="Sending.."
+                        loading_text="Sending..",
+                        bg="#FF69B4",
+                        text_color="white"
                     ),
                 ),
                 on_submit=ChatBotState.submit_data,
             ),
         ),
-        
-        rx.button("Refresh Conversation", on_click=ChatBotState.refresh()),
-        width="70em"
+        rx.button("Refresh Conversation", on_click=ChatBotState.refresh(), bg="#FF69B4", text_color="white"),
+        width="100%",
+        padding="2em",
+        border=styles.border,
+        border_radius="2.5rem",
+        bg="#FF69B412"
     )

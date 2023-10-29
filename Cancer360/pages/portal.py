@@ -14,5 +14,6 @@ def portal() -> rx.Component:
     """
     return rx.hstack(
         sidebar("#FF69B4", "#FFFFFF", "#FFFFFF", "#FFFFFF"),
+        rx.spacer(),
         chatting(),
     )
