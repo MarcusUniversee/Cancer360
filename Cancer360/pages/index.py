@@ -5,6 +5,7 @@ from Cancer360.templates import template
 from Cancer360.components.appointment import appointment
 from Cancer360.components.timmycomponent import timmy_component
 from Cancer360.components.cnn_detect import cnn_detect
+from Cancer360.components.zepp import zepp
 import reflex as rx
 
 
@@ -17,7 +18,8 @@ def index() -> rx.Component:
     """
     return rx.vstack(
         # appointment(),
-        timmy_component(),
+        zepp(),
+        # timmy_component(),
         #cnn_detect(),
         #rx.text("Insert graphics here"),
         rx.link(
