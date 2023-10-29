@@ -6,6 +6,20 @@ from Cancer360.state import State
 import reflex as rx
 
 
+def sidebar_item(text: str, link: str, color: str) -> rx.Component:
+    return rx.link(
+        rx.box(
+            rx.text(text, font_size="1.5em"),
+            padding="2em",
+            bg=color,
+            width="100%"
+        ),
+        href=link,
+        width="100%",
+        text_decoration="none",
+        _hover={}
+    )
+
 def sidebar(color1, color2, color3, color4) -> rx.Component:
     """The sidebar.
 
@@ -18,30 +32,10 @@ def sidebar(color1, color2, color3, color4) -> rx.Component:
         rx.vstack(
             rx.text("Steps", font_size="2.5em", padding="1em"),
             rx.vstack(
-                rx.box(
-                    rx.text("Chatbot"),
-                    padding="2em",
-                    bg = color1,
-                    width="100%"
-                ),
-                rx.box(
-                    rx.text("General information"),
-                    padding="2em",
-                    bg=color2,
-                    width="100%"
-                ),
-                rx.box(
-                    rx.text("Zepp watch"),
-                    padding="2em",
-                    bg=color3,
-                    width="100%"
-                ),
-                rx.box(
-                    rx.text("Xray Scan"),
-                    padding="2em",
-                    bg=color4,
-                    width="100%"
-                ),
+                sidebar_item("Chatbot", "/portal", color1),
+                sidebar_item("General Information", "/info_portal", color2),
+                sidebar_item("Zepp Watch", "/zepp_portal", color3),
+                sidebar_item("Xray Scans", "/scans_portal", color4),
                 width="100%"
             ),
             rx.spacer(),
@@ -49,7 +43,7 @@ def sidebar(color1, color2, color3, color4) -> rx.Component:
             width="100%"
         ),
         display=["none", "none", "block"],
-        width="15em",
+        min_width="15em",
         height="100%",
         position="sticky",
         top="0px",

@@ -59,5 +59,6 @@ def chatting() -> rx.Component:
             ),
         ),
         
-        rx.button("Refresh Conversation", on_click=ChatBotState.refresh())
+        rx.button("Refresh Conversation", on_click=ChatBotState.refresh()),
+        width="70em"
     )

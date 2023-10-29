@@ -14,5 +14,6 @@ def scans_portal() -> rx.Component:
     """
     return rx.hstack(
         sidebar("#FF69B470", "#FF69B470", "#FF69B470", "#FF69B4"),
+        rx.spacer(),
         cnn_detect(),
     )
