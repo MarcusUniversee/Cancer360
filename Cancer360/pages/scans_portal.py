@@ -13,7 +13,7 @@ def scans_portal() -> rx.Component:
         The UI for the portal page.
     """
     return rx.hstack(
-        sidebar("#FF69B470", "#FF69B470", "#FF69B470", "#FF69B4"),
+        sidebar("#FF69B470", "#FF69B470", "#FF69B470", "#FF69B4", 95),
         rx.spacer(),
         cnn_detect(),
     )

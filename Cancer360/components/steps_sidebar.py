@@ -20,7 +20,7 @@ def sidebar_item(text: str, link: str, color: str) -> rx.Component:
         _hover={}
     )
 
-def sidebar(color1, color2, color3, color4) -> rx.Component:
+def sidebar(color1, color2, color3, color4, prog) -> rx.Component:
     """The sidebar.
 
     Returns:
@@ -30,7 +30,8 @@ def sidebar(color1, color2, color3, color4) -> rx.Component:
 
     return rx.box(
         rx.vstack(
-            rx.text("Steps", font_size="2.5em", padding="1em"),
+            rx.text("Steps", font_size="2em", padding="0.2em"),
+            rx.progress(value=prog, width="100%", padding="0.2em", color_scheme="pink"),
             rx.vstack(
                 sidebar_item("Chatbot", "/portal", color1),
                 sidebar_item("General Information", "/info_portal", color2),

@@ -13,7 +13,7 @@ def portal() -> rx.Component:
         The UI for the portal page.
     """
     return rx.hstack(
-        sidebar("#FF69B4", "#FFFFFF", "#FFFFFF", "#FFFFFF"),
+        sidebar("#FF69B4", "#FFFFFF", "#FFFFFF", "#FFFFFF", 5),
         rx.spacer(),
         chatting(),
     )

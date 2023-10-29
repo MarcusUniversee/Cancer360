@@ -14,7 +14,7 @@ def info_portal() -> rx.Component:
         The UI for the portal page.
     """
     return rx.hstack(
-        sidebar("#FF69B470", "#FF69B4", "#FFFFFF", "#FFFFFF"),
+        sidebar("#FF69B470", "#FF69B4", "#FFFFFF", "#FFFFFF", 35),
         rx.spacer(),
         timmy_component()
     )
