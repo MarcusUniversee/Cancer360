@@ -20,7 +20,7 @@ def index() -> rx.Component:
         # appointment(),
         # zepp(),
         # timmy_component(),
-        #cnn_detect(),
+        # cnn_detect(),
         #rx.text("Insert graphics here"),
         rx.link(
             rx.circle(

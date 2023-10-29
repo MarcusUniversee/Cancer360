@@ -45,7 +45,7 @@ def cnn_detect() -> rx.Component:
         rx.foreach(
             CNNState.img, lambda img: rx.image(src=img)
         ),
-        rx.text(CNNState.prediction_string),
+        rx.text(CNNState.prediction_string, font_weight="bold", background_image="linear-gradient(271.68deg, #EE756A 0.75%, #756AEE 88.52%)"),
         width="100%",
         padding="3em",
         border=styles.border,
