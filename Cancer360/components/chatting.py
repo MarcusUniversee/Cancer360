@@ -31,14 +31,17 @@ def chatting() -> rx.Component:
             chat_bubble,
         ),
         rx.form(
-            rx.vstack(
-                rx.input(
-                    placeholder="msg",
+            rx.hstack(
+                rx.editable(
+                    rx.editable_preview(),
+                    rx.editable_textarea(),
+                    placeholder="Send a message...",
                     id="msg",
+                    overflow_y="hidden"
                 ),
                 rx.button("Send", type_="submit"),
             ),
             on_submit=ChatBotState.submit_data,
         ),
-        rx.button("Refresh Conversation", on_click=ChatBotState.refresh())
+        rx.button("Refresh Conversation", on_click=ChatBotState.refresh()),
     )
