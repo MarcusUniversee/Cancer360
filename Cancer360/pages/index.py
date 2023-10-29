@@ -3,6 +3,7 @@
 from Cancer360 import styles
 from Cancer360.templates import template
 from Cancer360.components.appointment import appointment
+from Cancer360.components.timmycomponent import timmy_component
 import reflex as rx
 
 
@@ -14,7 +15,8 @@ def index() -> rx.Component:
         The UI for the home page.
     """
     return rx.vstack(
-        appointment(),
+        # appointment(),
+        timmy_component(),
         rx.text("Insert graphics here"),
         rx.link(
             rx.circle(
