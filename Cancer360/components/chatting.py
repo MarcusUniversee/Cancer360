@@ -36,7 +36,13 @@ def chatting() -> rx.Component:
                     placeholder="msg",
                     id="msg",
                 ),
-                rx.button("Send", type_="submit"),
+                rx.button(
+                    "Send",
+                    type_="submit",
+                    on_click=ChatBotState.start_loading(),
+                    is_loading=ChatBotState.loading,
+                    loading_text="Sending.."
+                ),
             ),
             on_submit=ChatBotState.submit_data,
         ),

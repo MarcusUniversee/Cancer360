@@ -16,11 +16,16 @@ class ChatBotState(State):
     data_formatted: list
     prompt: str = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
     end: bool = False
+    loading: bool = False
+    empty: str = ""
 
     def refresh(self):
         self.prompt = f"<s>[INST] <<SYS>>{system_prompt}<</SYS>>\n\n"
         self.data_formatted = []
         self.end = False
+        self.loading = False
+    def start_loading(self):
+        self.loading = True
     def submit_data(self, form_data: dict):
         data = form_data['msg']
         self.prompt += data + "[/INST]"
@@ -29,6 +34,7 @@ class ChatBotState(State):
         second_occurrence = self.prompt.find(string, first_occurrence + 1)
         if second_occurrence != -1:
             self.end = True
+            self.loading = False
             return
         output = together.Complete.create(
             self.prompt, 
@@ -45,6 +51,7 @@ class ChatBotState(State):
         self.data = self.prompt
         self.data_formatted = split_chat(self.prompt)
         second_occurrence = self.prompt.find(string, first_occurrence + 1)
+        self.loading = False
         if second_occurrence != -1:
             self.end = True
             return
