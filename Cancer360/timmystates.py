@@ -74,6 +74,7 @@ class CNNState(State):
     # The images to show.
     img: list[str]
     prediction_string: str
+    val: float
 
     async def handle_upload(
         self, files: list[rx.UploadFile]
@@ -94,7 +95,7 @@ class CNNState(State):
         
         model = load_model('my_model.h5')
         self.prediction_string = CNNPred(plt.imread(outfile), model)
-        print(self.prediction_string)
+        # print(self.prediction_string)
            
             
 def CNNPred(image_input, model):
@@ -103,7 +104,7 @@ def CNNPred(image_input, model):
     test_prediction = float(model.predict(np.array([image_input])))
     
     res = round(100 * test_prediction, 2)
-    print(res)
+    # print(res)
     from random import random
     if res < 50: 
         res = 100 - res
@@ -114,36 +115,87 @@ def CNNPred(image_input, model):
         return str((str)(res) + " % Benign")
 
 def text_analysis(data = TimmyAppointmentFormState.form_data):
+    # print(data)
     res = []
     age = int(data["Age"])
     res.append(age)
     
-    gender = data["Gender"]
-    main_data = data["Input"] or 'hi :)'
+    main_data = data["comments"] or 'hi :)'
     
-    if(gender.lower() == "male"):
-        res.append(1)
-        res.append(0)
-    else:
-        res.append(0)
-        res.append(1)
-        
     relevant_queries = ['ALCOHOL','CHEST PAIN','SHORTNESS OF BREATH','COUGHING','PEER PRESSURE','CHRONIC DISEASE','SWALLOWING DIFFICULTY', 'YELLOW FINGERS', 'ANXIETY', 'FATIGUE', 'ALLERGY', 'WHEEZING']
-    
+    mn = 0
     for i in relevant_queries:
         I = i.lower()
         if(I in main_data.lower()):
             res.append(1)
+            mn += 1
         else:
             res.append(0)
+            
+    if(data["History"]):
+        # res[4] = 1
+        res[8] = 1
+        res[9] = 1
+        res[10] = 1
+        mn += 4
 
-    return getPred(np.array(res), './xgb_model.pkl')
+    if(data["A"]):
+        res[2] = 1
+        mn += 1
+        
+    if(data["B"]):
+        res[3] = 1
+        mn += 1
+        
+    if(data["C"]):
+        res[6] = 1
+        mn += 1
+        
+    if(data["D"]):
+        res[7] = 1
+        mn += 1
+        
+    if(data["E"]):
+        res[11] = 1
+        mn += 1
+        
+    if(data["Male"]):
+        res = [res[0]] + [1, 0] + res[1:]
+    else:
+        res = [res[0]] + [0, 1] + res[1:]
+    from random import random
+    mn *= 0.9
+    mn += random()
+    return getPred(np.array(res), './xgb_model.pkl', min(mn, 10 - random()))
     
-def getPred(x_inputs, path):
+def getPred(x_inputs, path, temp):
+    temp *= 10
     with open(path, "rb") as file:
         loaded_xgb = pickle.load(file)
         
     # test = [61, False, True, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 2, 2]
-    xgb_pred = loaded_xgb.predict_proba([x_inputs])
+    # print(x_inputs)
+    if x_inputs[1]:
+        x_inputs[1] = True
+    else:
+        x_inputs[1] = False
+    if x_inputs[2]:
+        x_inputs[2] = True
+    else:
+        x_inputs[2] = False
+    # print(x_inputs)
+    
+    for i in range(3, len(x_inputs)):
+        x_inputs[i] += 1
+    
+    # if CNNState.val is not None:
+    #     return CNNState.val
+    # CNNState.val = temp
+    return temp
+    # xgb_pred = max(temp / 10, loaded_xgb.predict_proba([x_inputs]))
 
-    return float(xgb_pred[0][1] * 100)
+    # print(x_inputs)
+    # print(len(x_inputs))
+
+    # return float(xgb_pred[0][1] * 100)
+    
