@@ -1,6 +1,4 @@
-#### For Evaluators/Sponsors
-
-Scroll down for a handy guide to navigating our repository and our project's assets.
+### Cancer360
 
 ## 💥 - How it all started
 
